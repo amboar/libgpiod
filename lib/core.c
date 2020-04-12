@@ -398,6 +398,11 @@ bool gpiod_line_is_open_source(struct gpiod_line *line)
 	return line->info_flags & GPIOLINE_FLAG_OPEN_SOURCE;
 }
 
+bool gpiod_line_is_persistent(struct gpiod_line *line)
+{
+	return line->info_flags & GPIOLINE_FLAG_PERSISTENT;
+}
+
 bool gpiod_line_needs_update(struct gpiod_line *line GPIOD_UNUSED)
 {
 	return false;
@@ -534,6 +539,8 @@ static __u32 line_request_flag_to_gpio_handleflag(int flags)
 		hflags |= GPIOHANDLE_REQUEST_BIAS_PULL_DOWN;
 	if (flags & GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP)
 		hflags |= GPIOHANDLE_REQUEST_BIAS_PULL_UP;
+	if (flags & GPIOD_LINE_REQUEST_FLAG_PERSISTENT)
+		hflags |= GPIOHANDLE_REQUEST_PERSISTENT;
 
 	return hflags;
 }

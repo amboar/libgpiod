@@ -30,6 +30,8 @@ static int ctxless_flags_to_line_request_flags(bool active_low, int flags)
 		req_flags |= GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP;
 	if (flags & GPIOD_CTXLESS_FLAG_BIAS_PULL_DOWN)
 		req_flags |= GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_DOWN;
+	if (flags & GPIOD_CTXLESS_FLAG_PERSISTENT)
+		req_flags |= GPIOD_LINE_REQUEST_FLAG_PERSISTENT;
 
 	return req_flags;
 }

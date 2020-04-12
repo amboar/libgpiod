@@ -34,6 +34,10 @@ static const struct flag flags[] = {
 		.name = "open-source",
 		.is_set = gpiod_line_is_open_source,
 	},
+	{
+		.name = "persistent",
+		.is_set = gpiod_line_is_persistent,
+	}
 };
 
 static const struct option longopts[] = {

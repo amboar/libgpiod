@@ -29,6 +29,7 @@ static const struct option longopts[] = {
 	{ "sec",		required_argument,	NULL,	's' },
 	{ "usec",		required_argument,	NULL,	'u' },
 	{ "background",		no_argument,		NULL,	'b' },
+	{ "persistent",		no_argument,		NULL,	'p' },
 	{ GETOPT_NULL_LONGOPT },
 };
 
@@ -54,6 +55,7 @@ static void print_help(void)
 	printf("  -s, --sec=SEC:\tspecify the number of seconds to wait (only valid for --mode=time)\n");
 	printf("  -u, --usec=USEC:\tspecify the number of microseconds to wait (only valid for --mode=time)\n");
 	printf("  -b, --background:\tafter setting values: detach from the controlling terminal\n");
+	printf("  -p, --persistent:\tmark the GPIO as having persistent state\n");
 	printf("\n");
 	print_bias_help();
 	printf("\n");
@@ -69,10 +71,10 @@ static void print_help(void)
 	printf("  signal:\tset values and wait for SIGINT or SIGTERM\n");
 	printf("\n");
 	printf("Note: the state of a GPIO line controlled over the character device reverts to default\n");
-	printf("when the last process referencing the file descriptor representing the device file exits.\n");
-	printf("This means that it's wrong to run gpioset, have it exit and expect the line to continue\n");
-	printf("being driven high or low. It may happen if given pin is floating but it must be interpreted\n");
-	printf("as undefined behavior.\n");
+	printf("for GPIOs that are not configured as persistent when the last process referencing the\n");
+	printf("file descriptor representing the device file exits. This means that it's wrong to run\n");
+	printf("gpioset, have it exit and expect the line to continue being driven high or low. It may\n");
+	printf("happen if given pin is floating but it must be interpreted as undefined behavior.\n");
 }
 
 struct callback_data {
@@ -253,6 +255,9 @@ int main(int argc, char **argv)
 			break;
 		case 'b':
 			cbdata.daemonize = true;
+			break;
+		case 'p':
+			flags |= GPIOD_CTXLESS_FLAG_PERSISTENT;
 			break;
 		case '?':
 			die("try %s --help", get_progname());

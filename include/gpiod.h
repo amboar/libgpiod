@@ -98,6 +98,7 @@ enum {
 	/**< The line has pull-down resistor enabled */
 	GPIOD_CTXLESS_FLAG_BIAS_PULL_UP		= GPIOD_BIT(4),
 	/**< The line has pull-up resistor enabled */
+	GPIOD_CTXLESS_FLAG_PERSISTENT		= GPIOD_BIT(5),
 };
 
 /**
@@ -905,6 +906,8 @@ bool gpiod_line_is_open_drain(struct gpiod_line *line) GPIOD_API;
  */
 bool gpiod_line_is_open_source(struct gpiod_line *line) GPIOD_API;
 
+bool gpiod_line_is_persistent(struct gpiod_line *line) GPIOD_API;
+
 /**
  * @brief Re-read the line info.
  * @param line GPIO line object.
@@ -967,6 +970,7 @@ enum {
  * @brief Miscellaneous GPIO request flags.
  */
 enum {
+	GPIOD_LINE_REQUEST_FLAG_AS_IS		= 0,
 	GPIOD_LINE_REQUEST_FLAG_OPEN_DRAIN	= GPIOD_BIT(0),
 	/**< The line is an open-drain port. */
 	GPIOD_LINE_REQUEST_FLAG_OPEN_SOURCE	= GPIOD_BIT(1),
@@ -979,6 +983,7 @@ enum {
 	/**< The line has pull-down resistor enabled. */
 	GPIOD_LINE_REQUEST_FLAG_BIAS_PULL_UP	= GPIOD_BIT(5),
 	/**< The line has pull-up resistor enabled. */
+	GPIOD_LINE_REQUEST_FLAG_PERSISTENT	= GPIOD_BIT(6),
 };
 
 /**
